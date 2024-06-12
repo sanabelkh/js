@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <script>
+        function validateForm() {
+            var firstName = document.forms["registrationForm"]["firstName"].value;
+            var lastName = document.forms["registrationForm"]["lastName"].value;
+            var birthDate = document.forms["registrationForm"]["birthDate"].value;
+            var email = document.forms["registrationForm"]["email"].value;
+            var confirmEmail = document.forms["registrationForm"]["confirmEmail"].value;
+            var password = document.forms["registrationForm"]["password"].value;
+            var confirmPassword = document.forms["registrationForm"]["confirmPassword"].value;
+
+            // 1. Check if the name has just letters
+            var nameRegex = /^[A-Za-z]+$/;
+            if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
+                alert("Please enter a valid name with letters only.");
+                return false;
+            }
+
+            // 2. Determine the birth date input and check for it in the right way
+            // You can use a library like Moment.js to handle date validation and formatting
+
+            // 3. Check the email structure by regular expression
+            var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // 4. Check if the two emails are the same
+            if (email !== confirmEmail) {
+                alert("Email and confirm email do not match.");
+                return false;
+            }
+
+            // 5. Check password requirements
+            var passwordRegex = /^(?=.*[A-Z])(?=.*\d.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,32}$/;
+            if (!passwordRegex.test(password)) {
+                alert("Please enter a valid password.\nPassword must start with a capital letter, have at least two numbers, include at least one special character, and be 8-32 characters long.");
+                return false;
+            }
+
+            // Check if the password confirmation is right
+            if (password !== confirmPassword) {
+                alert("Password and confirm password do not match.");
+                return false;
+            }
+
+            // 6. Mobile number should be 10 numbers
+            // You can add validation for the mobile number as per your requirements
+
+            // Store the data in local storage
+            var userData = {
+                firstName: firstName,
+                lastName: lastName,
+                birthDate: birthDate,
+                email: email,
+                password: password
+            };
+
+            localStorage.setItem("userData", JSON.stringify(userData));
+
+            alert("Registration successful!");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Registration Form</h2>
+    <form name="registrationForm" onsubmit="return validateForm()">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <label for="birthDate">Birth Date:</label>
+        <input type="date" id="birthDate" name="birthDate" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="confirmEmail">Confirm Email:</label>
+        <input type="email" id="confirmEmail" name="confirmEmail" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+</body>
+
+</html>
